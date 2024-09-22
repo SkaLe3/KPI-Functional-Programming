@@ -81,6 +81,7 @@
 <p align="center">
 <img src="lab-2-variant.png">
 </p>
+
 ```lisp
 (defvar list21 nil)
 (defvar final-list nil)
