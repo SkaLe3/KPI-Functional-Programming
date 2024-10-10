@@ -1,4 +1,4 @@
-## KPI-Functional-Programmin
+## KPI-Functional-Programming
 **Default Branch is selected**
 
 Select another branch
