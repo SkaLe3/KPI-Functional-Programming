@@ -25,22 +25,26 @@
     '((1 2) (3 4) (5 6) (7 8) (9 0) (a b) (c d) (e f) (g h) (i j) (k l) (m n) (o p) (q r) (s t) (u v) (w x) (y z))))
 
 
+(defun is-in-list (element lst)
+    "Helper function for list-set-union"
+    (cond
+    ((null lst) nil)
+    ((equal element (car lst)) t)
+    (t (is-in-list element (cdr lst)))))
+
 (defun list-set-union (list1 list2)
     "Compute the union of two lists, returning a new list containing all unique elements from lits1 and list2"
+    (labels ((skip-or-include (value rest-list other-list )
+    "Helper function for list-set-union"
+      (if (or (is-in-list value other-list) (is-in-list value rest-list))
+        (list-set-union rest-list other-list)
+        (cons value (list-set-union rest-list other-list)))))
+
     (cond 
         ((and (null list1) (null list2)) nil )
-        ((null list1) 
-            (if (member (car list2) (cdr list2))
-                (list-set-union list1 (cdr list2))
-                (cons (car list2) (list-set-union list1 (cdr list2)))))
-        ((null list2)
-            (if (member (car list1) (cdr list1))
-                (list-set-union (cdr list1) list2)
-                (cons (car list1) (list-set-union (cdr list1) list2)))) 
-        (t
-            (if (or (member (car list1) list2) (member (car list1) (cdr list1)))
-                (list-set-union (cdr list1) list2)
-                (cons (car list1) (list-set-union (cdr list1) list2))))))
+        ((null list1)  (skip-or-include (car list2) list1 (cdr list2)))
+        ((null list2)  (skip-or-include (car list1) (cdr list1) list2))
+        (t             (skip-or-include (car list1) (cdr list1) list2)))))
 
 (defun run-list-set-union-test (name input-list-1 input-list-2 expected-list)
     "Run a test for the `list-set-union` function with `input-list-1` and `input-list-2` and compare it to `expected-list`"
