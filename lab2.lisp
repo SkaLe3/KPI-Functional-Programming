@@ -35,10 +35,10 @@
 (defun list-set-union (list1 list2)
     "Compute the union of two lists, returning a new list containing all unique elements from lits1 and list2"
     (labels ((skip-or-include (value rest-list other-list )
-    "Helper function for list-set-union"
-      (if (or (is-in-list value other-list) (is-in-list value rest-list))
-        (list-set-union rest-list other-list)
-        (cons value (list-set-union rest-list other-list)))))
+            "Helper function for list-set-union"
+        (if (or (is-in-list value other-list) (is-in-list value rest-list))
+            (list-set-union rest-list other-list)
+            (cons value (list-set-union rest-list other-list)))))
 
     (cond 
         ((and (null list1) (null list2)) nil )
