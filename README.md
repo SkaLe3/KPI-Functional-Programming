@@ -129,13 +129,25 @@ CL-USER> (reduce (rpropagation-reducer :comparator #'>)
 
 ```lisp
 (defun rpropagation-reducer (&key (comparator #'<))
+ "Returns a function to be used as the first argument in the `reduce` function.
+
+Restrictions:
+- `reduce` must be called with the keyword argument `:from-end` set to `t`
+  (i.e., the list traversal must occur from the end).
+- `reduce` must be called with the keyword argument `:initial-value` set to `nil`.
+  This ensures proper initialization of the accumulator (the result list).
+Description:
+The function takes a keyword parameter `:comparator`, which defaults to `#'<`.
+This comparator determines whether the current element is 'better' than the 
+next one. If the current element is not better, it is replaced by the value 
+of the 'better' element to the right."
   (lambda (current acc-previous)
     (if (null acc-previous)
         (list current)
-        (let ((new-acc (if (funcall comparator current (car acc-previous))
+        (if (funcall comparator current (car acc-previous))
                        (cons current acc-previous)  
-                       (cons (car acc-previous) acc-previous)))) 
-            new-acc))))
+                       (cons (car acc-previous) acc-previous)))))
+
 
 (defun rpropagation-reducer-call (input-list &key comparator)
     (reduce (rpropagation-reducer :comparator comparator) input-list :from-end t :initial-value nil))
