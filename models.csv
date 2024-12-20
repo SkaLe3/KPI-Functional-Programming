@@ -1,0 +1,4 @@
+id,name,type,framework,owner
+1,TrafficNetV2,ComputerVision,TensorFlow,CityGovAIDept
+2,ChatGPTCustom,NLP,PyTorch,E-CommerceInc
+3,DiagNet,DeepLearning,TensorFlow,HealthTechAISolutions
