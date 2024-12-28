@@ -98,11 +98,10 @@
   (when table
     (if (null header)
         (let ((new-header (mapcar #'car (first table))))
-          (progn
             (format stream (first format-str) new-header)
-            (format-table-output format-str stream table new-header)))
+            (format-table-output format-str stream table new-header))
             
-        (progn
+          (progn
           (format stream (second format-str)
                   (mapcar #'cdr (align-assoc-list header (first table))))
           (format-table-output format-str stream (rest table) header)))))
